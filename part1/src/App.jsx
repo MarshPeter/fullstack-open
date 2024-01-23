@@ -19,9 +19,18 @@ function Part(props) {
 function Content(props) {
     return (
         <div>
-            <Part partName={props.part1} excercisesCount={props.excercises1} />
-            <Part partName={props.part2} excercisesCount={props.excercises2} />
-            <Part partName={props.part3} excercisesCount={props.excercises3} />
+            <Part
+                partName={props.part1.name}
+                excercisesCount={props.part1.excercises}
+            />
+            <Part
+                partName={props.part2.name}
+                excercisesCount={props.part2.excercises}
+            />
+            <Part
+                partName={props.part3.name}
+                excercisesCount={props.part3.excercises}
+            />
         </div>
     );
 }
@@ -39,28 +48,27 @@ function Footer(props) {
 
 function App() {
     const course = "Half stack application development";
-    const part1 = "Fundamentals of React";
-    const excercises1 = 10;
-    const part2 = "Using props to pass data";
-    const excercises2 = 7;
-    const part3 = "State of a component";
-    const excercises3 = 14;
+    const part1 = {
+        name: "Fundamentals of React",
+        excercises: 10,
+    };
+    const part2 = {
+        name: "Fundamentals of React",
+        excercises: 10,
+    };
+    const part3 = {
+        name: "Fundamentals of React",
+        excercises: 10,
+    };
 
     return (
         <div>
             <Header course={course} />
-            <Content
-                part1={part1}
-                part2={part2}
-                part3={part3}
-                excercises1={excercises1}
-                excercises2={excercises2}
-                excercises3={excercises3}
-            />
+            <Content part1={part1} part2={part2} part3={part3} />
             <Footer
-                excercises1={excercises1}
-                excercises2={excercises2}
-                excercises3={excercises3}
+                excercises1={part1.excercises1}
+                excercises2={part2.excercises}
+                excercises3={part3.excercises}
             />
         </div>
     );
