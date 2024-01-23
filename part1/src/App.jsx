@@ -17,7 +17,6 @@ function Part(props) {
 }
 
 function Content(props) {
-    console.log(props.parts);
     return (
         <div>
             {props.parts.map((part) => {
@@ -34,7 +33,6 @@ function Content(props) {
 }
 
 function Footer(props) {
-    console.log(props.parts[0].excercises);
     return (
         <div>
             <p>
@@ -48,27 +46,29 @@ function Footer(props) {
 }
 
 function App() {
-    const course = "Half stack application development";
-    const parts = [
-        {
-            name: "Fundamentals of React",
-            excercises: 10,
-        },
-        {
-            name: "Using props to pass data",
-            excercises: 7,
-        },
-        {
-            name: "State of a component",
-            excercises: 14,
-        },
-    ];
+    const course = {
+        name: "Half stack application development",
+        parts: [
+            {
+                name: "Fundamentals of React",
+                excercises: 10,
+            },
+            {
+                name: "Using props to pass data",
+                excercises: 7,
+            },
+            {
+                name: "State of a component",
+                excercises: 14,
+            },
+        ],
+    };
 
     return (
         <div>
-            <Header course={course} />
-            <Content parts={parts} />
-            <Footer parts={parts} />
+            <Header course={course.name} />
+            <Content parts={course.parts} />
+            <Footer parts={course.parts} />
         </div>
     );
 }
