@@ -24,6 +24,8 @@ function App() {
         7: 0,
         8: 0,
     });
+    const [mostVotes, setMostVotes] = useState(0);
+    const [mostVotedQuote, setMostVotedQuote] = useState(anecdotes[0]);
 
     function onNewAnecdote() {
         const nextIndex = Math.floor(Math.random() * anecdotes.length);
@@ -33,17 +35,26 @@ function App() {
     function onVote() {
         const newVotes = { ...votes };
         newVotes[selected]++;
+        if (newVotes[selected] > mostVotes) {
+            setMostVotes(newVotes[selected]);
+            setMostVotedQuote(anecdotes[selected]);
+        }
         setVotes(newVotes);
     }
 
     return (
         <div>
+            <h1>Anecdote of the day</h1>
             <p>{anecdotes[selected]}</p>
             <p>Has {votes[selected]} votes</p>
             <div>
                 <button onClick={onVote}>Vote</button>
                 <button onClick={onNewAnecdote}>New Anecdote</button>
             </div>
+
+            <h2>Anecode with the most votes</h2>
+            <p>{mostVotes}</p>
+            <p>{mostVotedQuote}</p>
         </div>
     );
 }
