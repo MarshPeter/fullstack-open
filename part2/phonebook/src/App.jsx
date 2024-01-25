@@ -10,6 +10,13 @@ function App() {
 
     function handleFormSubmit(e) {
         e.preventDefault();
+        for (let i = 0; i < persons.length; i++) {
+            // returns 0 if equal which is falsey
+            if (!persons[i].name.localeCompare(newName)) {
+                alert(`${newName} is already added to the phonebook`);
+                return;
+            }
+        }
         const newPersons = [...persons];
         newPersons.push({ name: newName });
         setPersons(newPersons);
