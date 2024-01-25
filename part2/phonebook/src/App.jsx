@@ -1,4 +1,8 @@
 import { useState } from "react";
+import NameDisplay from "./components/NameDisplay";
+import NameSection from "./components/NameSection";
+import PhonebookForm from "./components/PhonebookForm";
+import Filter from "./components/Filter";
 
 function App() {
     const [persons, setPersons] = useState([
@@ -45,54 +49,19 @@ function App() {
     return (
         <div>
             <h2>Phonebook</h2>
-            <div>
-                <p>Look for names containing: </p>
-                <input
-                    value={filterText}
-                    onChange={handleFilterTextChange}
-                    type="text"
-                />
-            </div>
-            <h2>Add a new Individual</h2>
-            <form onSubmit={handleFormSubmit}>
-                <div>
-                    name:{" "}
-                    <input value={newName} onChange={handleNameTextChange} />
-                </div>
-                <div>
-                    number:{" "}
-                    <input
-                        value={newPhoneNumber}
-                        onChange={handlePhoneTextChange}
-                    />
-                </div>
-                <div>
-                    <button type="submit">add</button>
-                </div>
-            </form>
+            <Filter
+                filterText={filterText}
+                handleFilterTextChange={handleFilterTextChange}
+            />
+            <PhonebookForm
+                handleFormSubmit={handleFormSubmit}
+                handleNameTextChange={handleNameTextChange}
+                handlePhoneTextChange={handlePhoneTextChange}
+                newName={newName}
+                newPhoneNumber={newPhoneNumber}
+            />
             <h2>Numbers</h2>
-            {filterText
-                ? persons.map((person) => {
-                      if (
-                          !person.name
-                              .toLowerCase()
-                              .includes(filterText.trim().toLowerCase())
-                      ) {
-                          return;
-                      }
-                      return (
-                          <p key={person.name}>
-                              {person.name} {person.number}
-                          </p>
-                      );
-                  })
-                : persons.map((person) => {
-                      return (
-                          <p key={person.name}>
-                              {person.name} {person.number}
-                          </p>
-                      );
-                  })}
+            <NameSection persons={persons} filterText={filterText} />
         </div>
     );
 }
