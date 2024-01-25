@@ -1,15 +1,30 @@
 import { useState } from "react";
 
 function App() {
-    const [persons, setPersons] = useState([{ name: "Arto Hellas" }]);
+    const [persons, setPersons] = useState([
+        { name: "Arto Hellas", number: "040-1234567" },
+    ]);
     const [newName, setNewName] = useState("");
+    const [newPhoneNumber, setNewPhoneNumber] = useState("");
 
-    function handleTextChange(e) {
+    function handleNameTextChange(e) {
         setNewName(e.target.value);
+    }
+
+    function handlePhoneTextChange(e) {
+        setNewPhoneNumber(e.target.value);
     }
 
     function handleFormSubmit(e) {
         e.preventDefault();
+
+        if (!newName || !newPhoneNumber) {
+            alert(
+                "There must be both a name and a phone number entered to submit yourself to the phoneboo"
+            );
+            return;
+        }
+
         for (let i = 0; i < persons.length; i++) {
             // returns 0 if equal which is falsey
             if (!persons[i].name.localeCompare(newName)) {
@@ -18,7 +33,7 @@ function App() {
             }
         }
         const newPersons = [...persons];
-        newPersons.push({ name: newName });
+        newPersons.push({ name: newName, number: newPhoneNumber });
         setPersons(newPersons);
     }
 
@@ -27,7 +42,15 @@ function App() {
             <h2>Phonebook</h2>
             <form onSubmit={handleFormSubmit}>
                 <div>
-                    name: <input value={newName} onChange={handleTextChange} />
+                    name:{" "}
+                    <input value={newName} onChange={handleNameTextChange} />
+                </div>
+                <div>
+                    number:{" "}
+                    <input
+                        value={newPhoneNumber}
+                        onChange={handlePhoneTextChange}
+                    />
                 </div>
                 <div>
                     <button type="submit">add</button>
@@ -35,7 +58,11 @@ function App() {
             </form>
             <h2>Numbers</h2>
             {persons.map((person) => {
-                return <p key={person.name}>{person.name}</p>;
+                return (
+                    <p key={person.name}>
+                        {person.name} {person.number}
+                    </p>
+                );
             })}
         </div>
     );
