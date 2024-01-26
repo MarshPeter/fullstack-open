@@ -1,13 +1,11 @@
-import { useState } from "react";
-import NameDisplay from "./components/NameDisplay";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import NameSection from "./components/NameSection";
 import PhonebookForm from "./components/PhonebookForm";
 import Filter from "./components/Filter";
 
 function App() {
-    const [persons, setPersons] = useState([
-        { name: "Arto Hellas", number: "040-1234567" },
-    ]);
+    const [persons, setPersons] = useState([]);
     const [newName, setNewName] = useState("");
     const [newPhoneNumber, setNewPhoneNumber] = useState("");
     const [filterText, setFilterText] = useState("");
@@ -45,6 +43,12 @@ function App() {
         newPersons.push({ name: newName, number: newPhoneNumber });
         setPersons(newPersons);
     }
+
+    useEffect(() => {
+        axios
+            .get("http://localhost:3001/persons")
+            .then((response) => setPersons(response.data));
+    }, []);
 
     return (
         <div>
