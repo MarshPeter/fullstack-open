@@ -39,9 +39,17 @@ function App() {
                 return;
             }
         }
-        const newPersons = [...persons];
-        newPersons.push({ name: newName, number: newPhoneNumber });
-        setPersons(newPersons);
+
+        const newPerson = {
+            name: newName,
+            number: newPhoneNumber,
+        };
+
+        axios.post("http://localhost:3001/persons", newPerson).then((res) => {
+            const newPersons = [...persons];
+            newPersons.push(res.data);
+            setPersons(newPersons);
+        });
     }
 
     useEffect(() => {
