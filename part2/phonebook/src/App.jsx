@@ -1,4 +1,4 @@
-import axios from "axios";
+import peopleDb from "./services/persons";
 import { useEffect, useState } from "react";
 import NameSection from "./components/NameSection";
 import PhonebookForm from "./components/PhonebookForm";
@@ -40,22 +40,17 @@ function App() {
             }
         }
 
-        const newPerson = {
-            name: newName,
-            number: newPhoneNumber,
-        };
-
-        axios.post("http://localhost:3001/persons", newPerson).then((res) => {
+        peopleDb.addPerson(newName, newPhoneNumber).then((data) => {
             const newPersons = [...persons];
-            newPersons.push(res.data);
+            newPersons.push(data);
             setPersons(newPersons);
         });
     }
 
     useEffect(() => {
-        axios
-            .get("http://localhost:3001/persons")
-            .then((response) => setPersons(response.data));
+        peopleDb
+            .getAllPersons()
+            .then((initialPeople) => setPersons(initialPeople));
     }, []);
 
     return (
