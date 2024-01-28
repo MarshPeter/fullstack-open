@@ -12,10 +12,24 @@ export default function NameSection(props) {
                       ) {
                           return;
                       }
-                      return <NameDisplay key={person.name} person={person} />;
+                      return (
+                          <div key={person.name}>
+                              <NameDisplay
+                                  person={person}
+                                  onClick={props.deletePersonHandle}
+                              />
+                          </div>
+                      );
                   })
                 : props.persons.map((person) => {
-                      return <NameDisplay key={person.name} person={person} />;
+                      return (
+                          <div key={person.name}>
+                              <NameDisplay
+                                  person={person}
+                                  onClick={props.deletePersonHandle}
+                              />
+                          </div>
+                      );
                   })}
         </div>
     );

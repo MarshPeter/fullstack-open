@@ -18,7 +18,12 @@ function addPerson(name, number) {
     return request.then((response) => response.data);
 }
 
+function deletePerson(id) {
+    axios.delete(baseUrl + `/${id}`);
+}
+
 export default {
     getAllPersons,
     addPerson,
+    deletePerson,
 };

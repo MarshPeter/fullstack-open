@@ -47,6 +47,28 @@ function App() {
         });
     }
 
+    function handlePersonDelete(e) {
+        const id = e.target.value;
+        let name = "";
+        for (let i = 0; i < persons.length; i++) {
+            if (persons[i].id === id) {
+                name = persons[i].name;
+                break;
+            }
+        }
+        e.preventDefault();
+        const userIsSure = confirm(`Are you sure you wish to delete ${name}`);
+
+        if (!userIsSure) {
+            return;
+        }
+
+        peopleDb.deletePerson(id);
+
+        const newPersons = persons.filter((person) => person.id !== id);
+        setPersons(newPersons);
+    }
+
     useEffect(() => {
         peopleDb
             .getAllPersons()
@@ -68,7 +90,11 @@ function App() {
                 newPhoneNumber={newPhoneNumber}
             />
             <h2>Numbers</h2>
-            <NameSection persons={persons} filterText={filterText} />
+            <NameSection
+                persons={persons}
+                filterText={filterText}
+                deletePersonHandle={handlePersonDelete}
+            />
         </div>
     );
 }
