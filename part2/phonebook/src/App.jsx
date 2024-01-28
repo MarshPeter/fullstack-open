@@ -34,8 +34,34 @@ function App() {
 
         for (let i = 0; i < persons.length; i++) {
             // returns 0 if equal which is falsey
-            if (!persons[i].name.localeCompare(newName)) {
-                alert(`${newName} is already added to the phonebook`);
+            console.log(persons[i].number.localeCompare(newPhoneNumber));
+            if (
+                !persons[i].name.localeCompare(newName) &&
+                persons[i].number.localeCompare(newPhoneNumber)
+            ) {
+                const personWishesToUpdatePhoneNumber = confirm(
+                    `${newName} is already added to the phonebook, replace the old number (${persons[i].number}) with the new number (${newPhoneNumber})?`
+                );
+
+                if (personWishesToUpdatePhoneNumber) {
+                    const personsNewDetails = { ...persons[i] };
+                    personsNewDetails.number = newPhoneNumber;
+                    peopleDb
+                        .updatePhoneNumber(persons[i].id, personsNewDetails)
+                        .then((data) => {
+                            console.log(data);
+                            console.log(persons);
+                            const updatedPersons = [...persons];
+                            updatedPersons[i].number = data.number;
+                            setPersons(updatedPersons);
+                        });
+                }
+
+                return;
+            } else if (!persons[i].name.localeCompare(newName)) {
+                alert(
+                    `${newName} is already in the phonebook, with the exact same number, the request will not be added.`
+                );
                 return;
             }
         }

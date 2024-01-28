@@ -22,8 +22,15 @@ function deletePerson(id) {
     axios.delete(baseUrl + `/${id}`);
 }
 
+function updatePhoneNumber(id, updatedDetails) {
+    const request = axios.put(baseUrl + `/${id}`, updatedDetails);
+
+    return request.then((response) => response.data);
+}
+
 export default {
     getAllPersons,
     addPerson,
     deletePerson,
+    updatePhoneNumber,
 };
