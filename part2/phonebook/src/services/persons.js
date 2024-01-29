@@ -19,7 +19,9 @@ function addPerson(name, number) {
 }
 
 function deletePerson(id) {
-    axios.delete(baseUrl + `/${id}`);
+    const request = axios.delete(baseUrl + `/${id}`);
+
+    return request;
 }
 
 function updatePhoneNumber(id, updatedDetails) {

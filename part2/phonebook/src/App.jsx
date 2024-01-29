@@ -3,12 +3,16 @@ import { useEffect, useState } from "react";
 import NameSection from "./components/NameSection";
 import PhonebookForm from "./components/PhonebookForm";
 import Filter from "./components/Filter";
+import NotificationMessage from "./components/NotificationMessage";
 
 function App() {
     const [persons, setPersons] = useState([]);
     const [newName, setNewName] = useState("");
     const [newPhoneNumber, setNewPhoneNumber] = useState("");
     const [filterText, setFilterText] = useState("");
+    const [notificationContainerClasses, setNotificationContainerClasses] =
+        useState("hide");
+    const [notificationText, setNotificationText] = useState("");
 
     function handleNameTextChange(e) {
         setNewName(e.target.value);
@@ -54,6 +58,16 @@ function App() {
                             const updatedPersons = [...persons];
                             updatedPersons[i].number = data.number;
                             setPersons(updatedPersons);
+
+                            setNotificationText(
+                                `Successfully modified the phone number of  ${data.name}`
+                            );
+                            setNotificationContainerClasses("success");
+
+                            setTimeout(() => {
+                                setNotificationText("");
+                                setNotificationContainerClasses("hide");
+                            }, 5000);
                         });
                 }
 
@@ -70,6 +84,16 @@ function App() {
             const newPersons = [...persons];
             newPersons.push(data);
             setPersons(newPersons);
+
+            setNotificationText(
+                `Successfully added ${newName} to the phonebook`
+            );
+            setNotificationContainerClasses("success");
+
+            setTimeout(() => {
+                setNotificationText("");
+                setNotificationContainerClasses("hide");
+            }, 5000);
         });
     }
 
@@ -89,10 +113,32 @@ function App() {
             return;
         }
 
-        peopleDb.deletePerson(id);
+        peopleDb
+            .deletePerson(id)
+            .then(() => {
+                const newPersons = persons.filter((person) => person.id !== id);
+                setPersons(newPersons);
+                setNotificationText(
+                    `Successfully deleted ${name} from the phonebook`
+                );
+                setNotificationContainerClasses("success");
 
-        const newPersons = persons.filter((person) => person.id !== id);
-        setPersons(newPersons);
+                setTimeout(() => {
+                    setNotificationText("");
+                    setNotificationContainerClasses("hide");
+                }, 5000);
+            })
+            .catch(() => {
+                setNotificationText(
+                    `${name} has already been deleted from the server`
+                );
+                setNotificationContainerClasses("error");
+
+                setTimeout(() => {
+                    setNotificationText("");
+                    setNotificationContainerClasses("hide");
+                }, 5000);
+            });
     }
 
     useEffect(() => {
@@ -104,6 +150,10 @@ function App() {
     return (
         <div>
             <h2>Phonebook</h2>
+            <NotificationMessage
+                notificationContainerClasses={notificationContainerClasses}
+                notificationText={notificationText}
+            />
             <Filter
                 filterText={filterText}
                 handleFilterTextChange={handleFilterTextChange}
