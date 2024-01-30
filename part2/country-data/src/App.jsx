@@ -15,6 +15,17 @@ function App() {
         setNameSearch(e.target.value);
     }
 
+    function handleShowSpecificCountry(e) {
+        e.preventDefault();
+        const targetName = e.target.value;
+        for (let i = 0; i < matchedCountries.length; i++) {
+            console.log(matchedCountries[i].name.common);
+            if (matchedCountries[i].name.common === targetName) {
+                setHighlightedListing(matchedCountries[i]);
+            }
+        }
+    }
+
     useEffect(() => {
         console.log("Fetching Data");
         countriesService.getAllCountries().then((data) => {
@@ -59,7 +70,10 @@ function App() {
                 />
             </div>
             <div>
-                <CountryListing matchedCountries={matchedCountries} />
+                <CountryListing
+                    matchedCountries={matchedCountries}
+                    handleShowCountry={handleShowSpecificCountry}
+                />
             </div>
             <div>
                 <HighlightedListing highlightedListing={highlightedListing} />

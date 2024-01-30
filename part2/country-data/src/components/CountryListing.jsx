@@ -22,7 +22,17 @@ export default function CountryListing(props) {
     return (
         <div>
             {matchedCountries.map((country) => {
-                return <p key={country.name.common}>{country.name.common}</p>;
+                return (
+                    <div key={country.name.common}>
+                        <p>{country.name.common}</p>
+                        <button
+                            onClick={props.handleShowCountry}
+                            value={country.name.common}
+                        >
+                            show details
+                        </button>
+                    </div>
+                );
             })}
         </div>
     );
