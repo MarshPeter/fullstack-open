@@ -116,7 +116,9 @@ function App() {
         peopleDb
             .deletePerson(id)
             .then(() => {
-                const newPersons = persons.filter((person) => person.id !== id);
+                const newPersons = persons.filter(
+                    (person) => person.id !== Number(id)
+                );
                 setPersons(newPersons);
                 setNotificationText(
                     `Successfully deleted ${name} from the phonebook`
@@ -142,9 +144,9 @@ function App() {
     }
 
     useEffect(() => {
-        peopleDb
-            .getAllPersons()
-            .then((initialPeople) => setPersons(initialPeople));
+        peopleDb.getAllPersons().then((initialPeople) => {
+            setPersons(initialPeople);
+        });
     }, []);
 
     return (
