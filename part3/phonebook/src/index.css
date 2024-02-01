@@ -1,0 +1,25 @@
+.hide {
+    display: none;
+}
+
+.success {
+    background-color: #aaa;
+    width: 99%;
+    margin: 0.3rem;
+    border-radius: 10px;
+    border: 3px solid green;
+    color: green;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.error {
+    background-color: #aaa;
+    width: 99%;
+    margin: 0.3rem;
+    border-radius: 10px;
+    border: 3px solid red;
+    color: red;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
