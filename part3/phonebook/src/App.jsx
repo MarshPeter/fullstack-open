@@ -116,9 +116,7 @@ function App() {
         peopleDb
             .deletePerson(id)
             .then(() => {
-                const newPersons = persons.filter(
-                    (person) => person.id !== Number(id)
-                );
+                const newPersons = persons.filter((person) => person.id !== id);
                 setPersons(newPersons);
                 setNotificationText(
                     `Successfully deleted ${name} from the phonebook`
