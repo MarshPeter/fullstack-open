@@ -68,6 +68,14 @@ function App() {
                                 setNotificationText("");
                                 setNotificationContainerClasses("hide");
                             }, 5000);
+                        })
+                        .catch((error) => {
+                            setNotificationText(error.response.data.error);
+                            setNotificationContainerClasses("error");
+                            setTimeout(() => {
+                                setNotificationText("");
+                                setNotificationContainerClasses("hide");
+                            }, 5000);
                         });
                 }
 
@@ -80,21 +88,33 @@ function App() {
             }
         }
 
-        peopleDb.addPerson(newName, newPhoneNumber).then((data) => {
-            const newPersons = [...persons];
-            newPersons.push(data);
-            setPersons(newPersons);
+        peopleDb
+            .addPerson(newName, newPhoneNumber)
+            .then((data) => {
+                const newPersons = [...persons];
+                newPersons.push(data);
+                setPersons(newPersons);
 
-            setNotificationText(
-                `Successfully added ${newName} to the phonebook`
-            );
-            setNotificationContainerClasses("success");
+                setNotificationText(
+                    `Successfully added ${newName} to the phonebook`
+                );
+                setNotificationContainerClasses("success");
 
-            setTimeout(() => {
-                setNotificationText("");
-                setNotificationContainerClasses("hide");
-            }, 5000);
-        });
+                setTimeout(() => {
+                    setNotificationText("");
+                    setNotificationContainerClasses("hide");
+                }, 5000);
+            })
+            .catch((error) => {
+                console.log(error);
+                setNotificationContainerClasses("error");
+                setNotificationText(error.response.data.error);
+
+                setTimeout(() => {
+                    setNotificationText("");
+                    setNotificationContainerClasses("hide");
+                }, 5000);
+            });
     }
 
     function handlePersonDelete(e) {
