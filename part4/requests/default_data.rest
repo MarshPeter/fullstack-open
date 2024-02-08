@@ -1,0 +1,33 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "title": "Enterprise software is frustrating",
+  "author": "Bilbo Baggins",
+  "url": "http://happy-life.com/gahsd13261234",
+  "likes": "12"
+}
+
+###
+
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "title": "Great software books for new software devs",
+  "author": "Andrew Garfield",
+  "url": "http://happy-life.com/1713417gasd",
+  "likes": "22"
+}
+
+###
+
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "title": "Interesting facts of low level programming",
+  "author": "Stewert Little",
+  "url": "http://happy-life.com/aghagasdf12345",
+  "likes": "50"
+}
