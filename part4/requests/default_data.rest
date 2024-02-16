@@ -31,3 +31,25 @@ Content-Type: application/json
   "url": "http://happy-life.com/aghagasdf12345",
   "likes": "50"
 }
+
+###
+
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "username": "DynamoDingo",
+  "name": "John Weedham",
+  "password": "123456qwerty"
+}
+
+###
+
+POST http://localhost:3003/api/users
+Content-Type:  application/json
+
+{
+  "username": "Electabuzz",
+  "name": "David Truman",
+  "password": "password"
+}
