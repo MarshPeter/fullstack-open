@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import blogService from '../services/blogs'
 
-const CreateNewBlog = () => {
+const CreateNewBlog = ({ handleNotification }) => {
   const [blogTitle, setBlogTitle] = useState('')
   const [blogAuthor, setBlogAuthor] = useState('')
   const [blogUrl, setBlogUrl] = useState('')
@@ -10,6 +10,7 @@ const CreateNewBlog = () => {
     event.preventDefault()
 
     if (!blogTitle || !blogAuthor || !blogUrl) {
+      handleNotification('notification error', 'Ensure that all fields are filled out')
       console.log("You need to fill out the title, author and url fields");
     }
 
@@ -23,6 +24,7 @@ const CreateNewBlog = () => {
     setBlogTitle('')
     setBlogAuthor('')
     setBlogUrl('')
+    handleNotification('notification success', 'Succesfully added blog, refresh to see updates!')
   }
 
   return (

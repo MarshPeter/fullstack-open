@@ -4,10 +4,13 @@ import blogService from './services/blogs'
 import LoginForm from './components/LoginForm'
 import UserInformation from './components/UserInformation'
 import CreateNewBlog from './components/CreateNewBlog'
+import "./app.css"
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
+  const [notificationMessage, setNotificationMessage] = useState('')
+  const [notificationClass, setNotificationClass] = useState('hide')
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -25,12 +28,32 @@ const App = () => {
     }
   }, [])
 
+  const handleNotification = (classes, message) => {
+    setNotificationClass(classes)
+    setNotificationMessage(message)
+
+    setTimeout(() => {
+      setNotificationClass('hide')
+      setNotificationMessage('')
+    }, 5000)
+  }
+
   return (
     <div>
-      { user === null && <LoginForm setUser={setUser} /> }
-      { user !== null && <UserInformation user={user} setUser={setUser} /> }
-      { user !== null && <CreateNewBlog /> }
-      { user !== null && <Blogs blogs={blogs} /> }
+      { user === null && <LoginForm 
+        setUser={ setUser }
+        handleNotification={ handleNotification } 
+        notificationClass={ notificationClass } 
+        notificationMessage={ notificationMessage } 
+      /> }
+      { user !== null && <UserInformation 
+        user={ user } 
+        setUser={ setUser }
+        notificationClass={ notificationClass } 
+        notificationMessage={ notificationMessage } 
+       /> }
+      { user !== null && <CreateNewBlog handleNotification={ handleNotification } /> }
+      { user !== null && <Blogs blogs={ blogs } /> }
     </div>
   )
 }

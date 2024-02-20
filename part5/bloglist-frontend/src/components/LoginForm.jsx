@@ -1,8 +1,9 @@
 import { useState } from "react"
 import loginService from '../services/login'
 import blogService from '../services/blogs'
+import Notification from "./Notification"
 
-const LoginForm = ({ setUser }) => {
+const LoginForm = ({ setUser, handleNotification, notificationClass, notificationMessage }) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
@@ -22,7 +23,9 @@ const LoginForm = ({ setUser }) => {
       setUser(user)
       setUsername('')
       setPassword('')
+      handleNotification('notification success', 'Successfully logged in')
     } catch (exception) {
+      handleNotification('notification error', 'Wrong username or password')
       console.log("There was an error: ", exception)
     }
   }
@@ -30,6 +33,7 @@ const LoginForm = ({ setUser }) => {
   return (
     <div>
       <h2>Login to the application</h2>
+      <Notification notificationClass={ notificationClass } notificationMessage={ notificationMessage } />     
       <form onSubmit={handleLogin}>
         <div>
           <label htmlFor="username-input">username: </label>
